@@ -1,0 +1,6 @@
+<configuration>
+  <property>
+    <name>fs.default.name</name>
+    <value>hdfs://airflow-hdfs:8020/</value>
+  </property>
+</configuration>

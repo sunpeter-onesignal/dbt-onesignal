@@ -7,7 +7,9 @@ services:
       - onesignal_default
     volumes:
       - './profiles.yml:/root/.dbt/profiles.yml'
-
+      - './onesignal:/dbt'
+    ports: 
+      - '8580:8580'
   os-postgres:
     image: osig/postgres-including-onesignal-dbs:6eabe36a25fbd218c46ef2f5f24ce8bf064acf4c
     networks:
@@ -17,18 +19,12 @@ services:
       - POSTGRES_USER=postgres
     ports: 
       - '5433:5432'
-  trino:
-    image: trinodb/trino:352
-    networks:
-      - onesignal_default
-    volumes:
-      - './docker-trino/config.properties:/etc/trino/config.properties'
-      - './docker-trino/catalog/hive.properties:/etc/trino/catalog/hive.properties'
-    ports:
-      - '8080:8080'
 networks:
   onesignal_default:
     external: true
+
+volumes:
+  hdfs-data:
 
 
       

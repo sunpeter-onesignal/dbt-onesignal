@@ -1,4 +1,3 @@
----
 onesignal-postgres:
   target: dev
   outputs:
@@ -11,4 +10,16 @@ onesignal-postgres:
       dbname: gamethrive
       schema: public
       threads: 4
-      
+
+airflow-presto:
+  target: dev
+  outputs:
+    dev:
+      type: presto
+      host: airflow-presto
+      user: dbt
+      pass: password
+      port: 8080
+      database: hive
+      schema: public
+      threads: 4
