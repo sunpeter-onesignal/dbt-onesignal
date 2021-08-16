@@ -33,10 +33,9 @@ clean-targets:         # directories to be removed by `dbt clean`
 # using the `{{ config(...) }}` macro.
 models:
   onesignal:
+    onesignal:
       # Applies to all files under models/example/
     example:
         materialized: view
-    marketing:
-        materialized: view
-    sales:
+    common:
         materialized: view
