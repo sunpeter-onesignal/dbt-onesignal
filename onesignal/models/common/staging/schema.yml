@@ -1,0 +1,36 @@
+
+version: 2
+
+models:
+    - name: sms_notifications
+      description: "SMS notification data"
+      columns:
+          - name: id
+            description: "Notification id"
+            tests:
+                - not_null
+                - unique
+          - name: app_id
+            description: "app id"
+            tests:
+                - not_null
+          - name: contents
+            description: "Contents of the SMS Notification"
+            tests:
+                - not_null
+          - name: ds
+            description: "Date that notification was sent"
+            tests:
+                - not_null
+          - name: sms_from
+            description: "Self-explanatory"
+            tests:
+                - not_null
+          - name: sms_media_urls
+            description: "Self-explanatory"
+            tests:
+                - not_null
+          - name: created_source
+            description: "Self-explanatory"
+            tests:
+                - not_null

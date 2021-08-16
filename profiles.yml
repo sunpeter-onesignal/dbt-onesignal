@@ -1,4 +1,3 @@
----
 onesignal-postgres:
   target: dev
   outputs:
@@ -11,4 +10,17 @@ onesignal-postgres:
       dbname: gamethrive
       schema: public
       threads: 4
-      
+
+presto-hive:
+  target: prod
+  outputs:
+    prod:
+      type: presto
+      method: none
+      host: 10.100.61.65
+      user: dbt
+      pass: password
+      port: 8080
+      catalog: hive
+      schema: public
+      threads: 1
