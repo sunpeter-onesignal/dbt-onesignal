@@ -11,15 +11,16 @@ onesignal-postgres:
       schema: public
       threads: 4
 
-airflow-presto:
-  target: dev
+presto-hive:
+  target: prod
   outputs:
-    dev:
+    prod:
       type: presto
-      host: airflow-presto
+      method: none
+      host: 10.100.61.65
       user: dbt
       pass: password
       port: 8080
-      database: hive
+      catalog: hive
       schema: public
-      threads: 4
+      threads: 1

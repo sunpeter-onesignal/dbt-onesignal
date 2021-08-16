@@ -1,4 +1,4 @@
-FROM fishtownanalytics/dbt:0.19.0
+FROM fishtownanalytics/dbt:0.20.0
 
 # Ubuntu specific commands according to dbt doc
 # RUN sudo apt-get install git libpq-dev python-dev python3-pip && \
@@ -13,7 +13,8 @@ RUN apt-get update \
     && apt-get dist-upgrade -y \
     && apt-get install -y --no-install-recommends libsasl2-dev gcc
 RUN pip install --upgrade pip
-RUN pip install dbt-presto dbt-postgres
+RUN pip install dbt-postgres
+RUN pip install git+https://github.com/sunpeter-onesignal/dbt-presto.git
 
 VOLUME [ "/data" ]
 

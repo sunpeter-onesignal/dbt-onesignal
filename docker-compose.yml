@@ -10,21 +10,9 @@ services:
       - './onesignal:/dbt'
     ports: 
       - '8580:8580'
-  os-postgres:
-    image: osig/postgres-including-onesignal-dbs:6eabe36a25fbd218c46ef2f5f24ce8bf064acf4c
-    networks:
-      - onesignal_default
-    environment: 
-      - POSTGRES_PASSWORD=password
-      - POSTGRES_USER=postgres
-    ports: 
-      - '5433:5432'
 networks:
   onesignal_default:
     external: true
-
-volumes:
-  hdfs-data:
 
 
       
