@@ -1,26 +1,13 @@
-onesignal-postgres:
-  target: dev
-  outputs:
-    dev:
-      type: postgres
-      host: os-postgres
-      user: postgres
-      pass: password
-      port: 5432
-      dbname: gamethrive
-      schema: public
-      threads: 4
-
-presto-hive:
-  target: prod
+onesignal-presto:
+  target: "{{ env_var('DBT_TARGET') }}"
   outputs:
     prod:
       type: presto
       method: none
-      host: 10.100.61.65
+      host: "{{ env_var('DBT_PRESTO_HOST') }}"
       user: dbt
       pass: password
-      port: 8080
+      port: "{{ env_var('DBT_PRESTO_PORT') }}"
       catalog: hive
       schema: public
-      threads: 1
+      threads: 4
