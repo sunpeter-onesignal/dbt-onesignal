@@ -1,4 +1,4 @@
-onesignal-presto:
+presto-hive:
   target: "{{ env_var('DBT_TARGET') }}"
   outputs:
     prod:
