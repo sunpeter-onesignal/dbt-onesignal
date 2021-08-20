@@ -17,17 +17,17 @@ releases:
     version: 0.0.13
     values:
       - environment: "production"
-       
+
         image:
           repository: "osig/dbt"
-          tag: {{ requiredEnv "GIT_COMMIT" | quote }}
-      
+          tag: { { requiredEnv "GIT_COMMIT" | quote } }
+
         create_namespace: false
 
         onesignal:
           team: "bi"
           repository: "https://github.com/OneSignal/dbt-onesignal"
-        
+
         resources:
           requests:
             memory: "1Gi"
@@ -35,7 +35,7 @@ releases:
           limits:
             memory: "1Gi"
             cpu: "1000m"
-        
+
         web:
           envVars:
             DBT_PRESTO_HOST: "presto-coordinator.onesignal-external-production..svc.cluster.local"
