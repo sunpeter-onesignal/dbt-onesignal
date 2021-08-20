@@ -9,27 +9,15 @@ FROM python:3.8-slim
 
 RUN apt-get update \
     && apt-get dist-upgrade -y \
-    && apt-get install -y openssh-client \
     && apt-get install -y --no-install-recommends libsasl2-dev gcc git 
 RUN pip install --upgrade pip
 RUN pip install dbt
 RUN pip install dbt-postgres
 RUN pip install git+http://github.com/sunpeter-onesignal/dbt-presto.git
 
-
-ARG SSH_PRIVATE_KEY
-RUN mkdir /root/.ssh/
-RUN echo "${SSH_PRIVATE_KEY}" > /root/.ssh/id_rsa
-RUN chmod 600 /root/.ssh/id_rsa
-RUN ssh-keyscan github.com >> /root/.ssh/known_hosts
-
-
-RUN mkdir /dbt-current
-VOLUME [ "/dbt-current" ]
-
-ENV REMOTE_REPO git@github.com:OneSignal/dbt-onesignal.git
-ENV REPO_DIR dbt-onesignal/onesignal
-
-COPY "./entrypoint.sh" "/dbt-current/entrypoint.sh"
-WORKDIR /dbt-current
-CMD [ "/bin/bash", "entrypoint.sh" ]
+RUN mkdir /root/.dbt
+COPY profiles.yml /root/.dbt/profiles.yml
+RUN mkdir /root/dbt-current
+COPY src /root/dbt-current
+WORKDIR /root/dbt-current
+CMD [ "dbt", "rpc" ]

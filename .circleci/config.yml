@@ -1,0 +1,38 @@
+version: 2.1
+
+orbs:
+  docker: circleci/docker@1.5.0
+
+jobs:
+  deploy:
+    docker:
+      - image: quay.io/roboll/helmfile:helm3-v0.138.7
+    steps:
+      - checkout
+      - run:
+          name: "Configure Kubeconfig"
+          command: |
+            mkdir -p "$HOME/.kube"
+            echo $KUBECONFIG_BASE64 | base64 -d > "$HOME/.kube/config"
+            chmod 600 "$HOME/.kube/config"
+      - run: script/deploy
+
+workflows:
+  version: 2
+  build:
+    jobs:
+      - docker/publish:
+          context: onesignal-global
+          image: "osig/dbt"
+          docker-username: DOCKER_LOGIN
+          tag: "$CIRCLE_SHA1"
+          dockerfile: "Dockerfile"
+
+      - deploy:
+          name: "Deploy to production"
+          context: lokomotive-production
+          requires:
+            - "docker/publish"
+          filters:
+            branches:
+              only: main

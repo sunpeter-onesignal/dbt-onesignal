@@ -1,0 +1,42 @@
+repositories:
+  - name: onesignal
+    url: https://dl.cloudsmith.io/ugZ15xCgdm7rQREk/onesignal/helm/helm/charts/
+
+routing:
+  fqdn: dbt.onesignal.io
+  custom:
+    - services:
+        - name: "dbt-rpc"
+          port: 8580
+      timeoutPolicy:
+        response: 10m
+
+releases:
+  - name: dbt-rpc
+    chart: onesignal/web
+    version: 0.0.13
+    values:
+      - environment: "production"
+       
+        image:
+          repository: "osig/dbt"
+          tag: {{ requiredEnv "GIT_COMMIT" | quote }}
+      
+        create_namespace: false
+
+        onesignal:
+          team: "bi"
+          repository: "https://github.com/OneSignal/dbt-onesignal"
+        
+        resources:
+          requests:
+            memory: "1Gi"
+            cpu: "1000m"
+          limits:
+            memory: "1Gi"
+            cpu: "1000m"
+        
+        web:
+          envVars:
+            DBT_PRESTO_HOST: "presto-coordinator.onesignal-external-production..svc.cluster.local"
+            DBT_PRESTO_PORT: "8080"
